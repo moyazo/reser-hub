@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5a189a"
-    tools:context=".SignUpActivity">
+    tools:context=".SignInActivity">
 
     <ImageView
         android:id="@+id/bgSignIn"
@@ -65,27 +64,6 @@
                 android:layout_height="wrap_content"
                 android:alpha="0.8"
                 android:text="@string/info_login" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="16dp" />
-
-            <TextView
-                android:id="@+id/nameField"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:alpha="0.7"
-                android:text="@string/name_field"
-                android:textColor="#5A189A" />
-
-            <EditText
-                android:id="@+id/nameEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="@string/name_field"
-                android:drawableEnd="@drawable/done_icon"
-                android:hint="@string/name_field"
-                android:inputType="text" />
 
             <Space
                 android:layout_width="match_parent"

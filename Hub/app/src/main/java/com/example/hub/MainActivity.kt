@@ -25,7 +25,13 @@ class MainActivity : AppCompatActivity() {
         signUpBtn.setOnClickListener{
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
-            Toast.makeText(this, "Estás en Sign Up", Toast.LENGTH_SHORT).show()
+        }
+
+        var signInpBtn: Button = findViewById<Button>(R.id.signIn)
+        // Change activity
+        signInpBtn.setOnClickListener{
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
         }
     }
 }
