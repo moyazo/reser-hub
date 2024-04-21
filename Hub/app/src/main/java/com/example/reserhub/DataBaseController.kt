@@ -15,9 +15,8 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASEN
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-
-        val tablesQuery  = """
-            CREATE TABLE users(
+        val userTableQuery = """
+             CREATE TABLE users(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name TEXT NOT NULL,
                             email TEXT NOT NULL,
@@ -27,14 +26,17 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASEN
             				createdAt DATE NOT NULL,
                             updatedAt DATE NOT NULL
             );
+        """.trimIndent()
 
+        val categoryTableQuery = """
             CREATE TABLE categories(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name TEXT NOT NULL,
                             createdAt DATE NOT NULL,
                             updatedAt DATE NOT NULL
             );
-
+        """.trimIndent()
+        val subCategoryTableQuery = """
             CREATE TABLE subCategories(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name TEXT NOT NULL,
@@ -43,7 +45,8 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASEN
                             categoryId INTEGER,
                             CONSTRAINT FK_category_Subcategories FOREIGN KEY (categoryId) REFERENCES categories(id)
             );
-
+        """.trimIndent()
+        val servicesTableQuery = """
             CREATE TABLE services(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             title TEXT NOT NULL,
@@ -55,7 +58,8 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASEN
                             categoryId INTEGER NOT NULL,
                             CONSTRAINT FK_category_Services FOREIGN KEY (categoryId) REFERENCES categories(id)
             );
-
+        """.trimIndent()
+        val reservasTableQuery = """
             CREATE TABLE reservas (
             	id INTEGER PRIMARY KEY AUTOINCREMENT,
                 userId INTEGER NOT NULL,    
@@ -67,7 +71,11 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASEN
             )
         """.trimIndent()
 
-        db?.execSQL(tablesQuery)
+        db?.execSQL(userTableQuery)
+        db?.execSQL(categoryTableQuery)
+        db?.execSQL(subCategoryTableQuery)
+        db?.execSQL(servicesTableQuery)
+        db?.execSQL(reservasTableQuery)
 
     }
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
