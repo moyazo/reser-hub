@@ -1,4 +1,4 @@
-package com.example.hub
+package com.example.reserhub
 
 import org.junit.Test
 
