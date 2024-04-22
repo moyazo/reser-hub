@@ -5,10 +5,16 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.reserhub.entities.CustomUser
+import com.example.reserhub.entities.Controller
+import com.example.reserhub.entities.types.CategoryDataImpl
+import com.example.reserhub.entities.types.ReservaDataImpl
+import com.example.reserhub.entities.types.ServiceDataImpl
+import com.example.reserhub.entities.types.SubCategoryDataImpl
 import com.example.reserhub.entities.types.UserDataImpl
 
-class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASENAME, null, DATABASE_VERSION), CustomUser {
+class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASENAME, null, DATABASE_VERSION),
+    Controller
+     {
     companion object{
         private const val DATABASENAME = "reserhub.db"
         private const val DATABASE_VERSION = 1
@@ -89,31 +95,120 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASEN
         onCreate(db)
     }
 
-    override fun signUp(email: String, name: String, password: String): Boolean {
-        TODO("Not yet implemented")
-    }
+         override fun signUp(email: String, name: String, password: String): String {
+             TODO("Not yet implemented")
+         }
 
-    override fun logIn(email: String, password: String): Boolean {
-        TODO("Not yet implemented")
-    }
+         override fun logIn(email: String, password: String): String {
+             TODO("Not yet implemented")
+         }
+         override fun getAllUsers(): List<UserDataImpl> {
+             TODO("Not yet implemented")
+         }
 
-    override fun createUser(user: UserDataImpl): Boolean {
-        TODO("Not yet implemented")
-    }
+         override fun getUserById(id: Int): UserDataImpl {
+             TODO("Not yet implemented")
+         }
 
-    override fun getAllUsers(): List<UserDataImpl> {
-        TODO("Not yet implemented")
-    }
+         override fun createUser(newData: UserDataImpl): Boolean {
+             TODO("Not yet implemented")
+         }
 
-    override fun getUserById(id: Int): UserDataImpl? {
-        TODO("Not yet implemented")
-    }
+         override fun modifyUser(id: Int, newData: UserDataImpl): Boolean {
+             TODO("Not yet implemented")
+         }
 
-    override fun updateUserById(id: Int, user: UserDataImpl): Boolean {
-        TODO("Not yet implemented")
-    }
+         override fun deleteUser(id: Int): Boolean {
+             TODO("Not yet implemented")
+         }
 
-    override fun deleteUserById(id: Int): Boolean {
-        TODO("Not yet implemented")
-    }
-}
+         override fun getAllCategories(): List<CategoryDataImpl> {
+             TODO("Not yet implemented")
+         }
+
+         override fun getCategory(id: Int): CategoryDataImpl {
+             TODO("Not yet implemented")
+         }
+
+         override fun createCategory(newDataImpl: UserDataImpl): Boolean {
+             TODO("Not yet implemented")
+         }
+
+         override fun modifyCategory(id: Int, newData: UserDataImpl): Boolean {
+             TODO("Not yet implemented")
+         }
+
+         override fun deleteCategory(id: Int): Boolean {
+             TODO("Not yet implemented")
+         }
+
+         override fun getAllServices(): List<ServiceDataImpl> {
+             TODO("Not yet implemented")
+         }
+
+         override fun getService(id: Int): ServiceDataImpl {
+             TODO("Not yet implemented")
+         }
+
+         override fun createService(newDataImpl: ServiceDataImpl): Boolean {
+             TODO("Not yet implemented")
+         }
+
+         override fun modifyService(id: Int, newData: ServiceDataImpl): Boolean {
+             TODO("Not yet implemented")
+         }
+
+         override fun deleteService(id: Int): Boolean {
+             TODO("Not yet implemented")
+         }
+
+         override fun getAllReserva(): List<ReservaDataImpl> {
+             TODO("Not yet implemented")
+         }
+
+         override fun getAllReservaOfUser(userId: Int): List<ReservaDataImpl> {
+             TODO("Not yet implemented")
+         }
+
+         override fun getReserva(id: Int, userId: Int): ReservaDataImpl {
+             TODO("Not yet implemented")
+         }
+
+         override fun createReserva(newDataImpl: ReservaDataImpl): Boolean {
+             TODO("Not yet implemented")
+         }
+
+         override fun modifyReserva(id: Int, userId: Int, newData: ReservaDataImpl): Boolean {
+             TODO("Not yet implemented")
+         }
+
+         override fun deleteReserva(id: Int, userId: Int): Boolean {
+             TODO("Not yet implemented")
+         }
+
+         override fun getAllSubCategories(): List<SubCategoryDataImpl> {
+             TODO("Not yet implemented")
+         }
+
+         override fun getAllSubCategoriesOfCat(categoryId: Int): List<SubCategoryDataImpl> {
+             TODO("Not yet implemented")
+         }
+
+         override fun getSubCategory(id: Int): SubCategoryDataImpl {
+             TODO("Not yet implemented")
+         }
+
+         override fun createSubCategory(newDataImpl: SubCategoryDataImpl): Boolean {
+             TODO("Not yet implemented")
+         }
+
+         override fun modifySubCategory(id: Int, newData: SubCategoryDataImpl): Boolean {
+             TODO("Not yet implemented")
+         }
+
+         override fun deleteSubCategory(id: Int): Boolean {
+             TODO("Not yet implemented")
+         }
+
+
+     }

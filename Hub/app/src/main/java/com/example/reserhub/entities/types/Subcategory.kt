@@ -1,14 +1,22 @@
 package com.example.reserhub.entities.types
 
-import java.sql.Date
 
-data class Subcategory(var name: String,
-                       var createdAt: Date,
-                       var updatedAt: Date,
-                       var categoryId: Int
-) {
-    override fun toString(): String {
-        return "Subcategory, name: $name, createdAt: $createdAt, updatedAt: $updatedAt"
-    }
+interface SubCategoryData {
+    var name: String?
+}
 
+open class SubCategoryDataImpl(
+    override var name: String?,
+) : SubCategoryData
+
+interface SubCategory {
+
+    fun getAllSubCategories() : List<SubCategoryDataImpl>
+    fun getAllSubCategoriesOfCat(categoryId: Int) : List<SubCategoryDataImpl>
+    fun getSubCategory(id: Int) : SubCategoryDataImpl
+    fun createSubCategory(newDataImpl: SubCategoryDataImpl) : Boolean
+    fun modifySubCategory(id: Int, newData: SubCategoryDataImpl) : Boolean
+    fun deleteSubCategory(id: Int) : Boolean
+
+    // TODO: para ambos roles, edición de "mi cuenta"
 }

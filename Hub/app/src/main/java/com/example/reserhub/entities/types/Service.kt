@@ -2,18 +2,30 @@ package com.example.reserhub.entities.types
 
 import java.sql.Date
 
-data class Service(
-    var title: String,
-    var description: String,
-    var startDate: java.util.Date,
-    var endDate: java.util.Date,
-    var createdAt: Date,
-    var updatedAt: Date,
-    var categoryId: Int
-) {
-    override fun toString(): String {
-        return "Service, title: $title, description: $description, startDate: $startDate," +
-                " endDate: $endDate, title: $title createdAt: $createdAt, updatedAt: $updatedAt, categoryId: $categoryId"
-    }
+interface ServiceData {
+    var title: String?
+    var description: String?
+    var startDate: Date?
+    var endDate: Date?
+    var categoryId: Int?
+}
 
+open class ServiceDataImpl(
+    override var title: String?,
+    override var description: String?,
+    override var startDate: Date?,
+    override var endDate: Date?,
+    override var categoryId: Int?
+
+) : ServiceData
+
+interface Service {
+
+    fun getAllServices() : List<ServiceDataImpl>
+    fun getService(id: Int) : ServiceDataImpl
+    fun createService(newDataImpl: ServiceDataImpl) : Boolean
+    fun modifyService(id: Int, newData: ServiceDataImpl) : Boolean
+    fun deleteService(id: Int) : Boolean
+
+    // TODO: para ambos roles, edición de "mi cuenta"
 }

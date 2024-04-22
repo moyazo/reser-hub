@@ -1,14 +1,23 @@
 package com.example.reserhub.entities.types
 
-import java.sql.Date
+interface ReservaData {
+    var userId: Int?
+    var serviceId: Int?
+}
 
-data class Reserva(
-    var userId: Int,
-    var serviceId: Int,
-    var createdAt: Date,
-    var updatedAt: Date,
-) {
-    override fun toString(): String {
-        return "Service, userId: $userId, serviceId: $serviceId createdAt: $createdAt, updatedAt: $updatedAt"
-    }
+open class ReservaDataImpl(
+    override var userId: Int?,
+    override var serviceId: Int?
+) : ReservaData
+
+interface Reserva {
+
+    fun getAllReserva() : List<ReservaDataImpl>
+    fun getAllReservaOfUser(userId: Int) : List<ReservaDataImpl>
+    fun getReserva(id: Int, userId: Int) : ReservaDataImpl
+    fun createReserva(newDataImpl: ReservaDataImpl) : Boolean
+    fun modifyReserva(id: Int, userId: Int, newData: ReservaDataImpl) : Boolean
+    fun deleteReserva(id: Int,userId: Int) : Boolean
+
+    // TODO: para ambos roles, edición de "mi cuenta"
 }
