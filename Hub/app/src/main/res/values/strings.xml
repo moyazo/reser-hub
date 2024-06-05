@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">ReserHub</string>
+    <string name="contentDes">img</string>
+    <string name="welcomeText">Welcome!</string>
+    <string name="credentials">Please write your credentials!</string>
+    <string name="NameField">Name</string>
+    <string name="NameInput">Pepito...</string>
+    <string name="EmailField">Email</string>
+    <string name="EmailInput">Pepito@...</string>
+    <string name="PasswordField">Password</string>
+    <string name="PasswordInput">Need a good one...</string>
+    <string name="SignUpBtn">Sign Up</string>
+    <string name="SignInBtn">Sign In?</string>
 </resources>
