@@ -102,6 +102,17 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
              if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
                  return ResponseUp(false, "Must fill all fields")
              }
+             val checker = CheckRestrictions();
+
+             val emailCheck = checker.checkEmail(email);
+             val passCheck = checker.checkPassword(password);
+             if (!emailCheck && !passCheck) {
+                 return ResponseUp(false, "Invalid")
+             } else if(!emailCheck){
+                 return ResponseUp(false, "Email invalid")
+             } else if(!passCheck) {
+                 return ResponseUp(false, "Al menos 8 caracteres, una mayúscula, una minúscula y un número")
+             }
 
              val db = writableDatabase
              val getUsersQuery = """SELECT * FROM users WHERE email = ?"""
@@ -128,19 +139,19 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
 
          @SuppressLint("Range")
          override fun logIn(email: String, password: String): ResponseIn {
+             val userNull = UserDataImpl(
+                 id = null,
+                 name = null,
+                 email = null,
+                 password = null,
+                 userName = null,
+                 rol = "null",
+                 createdAt = null,
+                 updatedAt = null
+             )
 
              if(email.isEmpty() || password.isEmpty()){
-                 val user = UserDataImpl(
-                     id = null,
-                     name = null,
-                     email = null,
-                     password = null,
-                     userName = null,
-                     rol = "null",
-                     createdAt = null,
-                     updatedAt = null
-                 )
-                 return ResponseIn(status = true, response = "Something is emty", user)
+                 return ResponseIn(status = true, response = "Something is emty", userNull)
              }
 
              val db = writableDatabase
@@ -153,18 +164,8 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
                  val userEmail = cursor.getString(cursor.getColumnIndex("email"))
                  val userPassword = cursor.getString(cursor.getColumnIndex("password"))
                  if(userPassword != password) {
-                     val user = UserDataImpl(
-                         id = null,
-                         name = null,
-                         email = null,
-                         password = null,
-                         userName = null,
-                         rol = "null",
-                         createdAt = null,
-                         updatedAt = null
-                     )
                      cursor.close()
-                     return ResponseIn(status = false, response = "Wrong credentials", user)
+                     return ResponseIn(status = false, response = "Wrong credentials", userNull)
                  }
                  val userRol = cursor.getString(cursor.getColumnIndex("rol"))
 
@@ -181,18 +182,8 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
                  cursor.close()
                  return ResponseIn(status = true, response = "User created succesfully", user)
              }else {
-                 val user = UserDataImpl(
-                     id = null,
-                     name = null,
-                     email = null,
-                     password = null,
-                     userName = null,
-                     rol = "null",
-                     createdAt = null,
-                     updatedAt = null
-                 )
                  cursor.close()
-                 return ResponseIn(status = true, response = "User do not found", user)
+                 return ResponseIn(status = true, response = "User do not found", userNull)
              }
          }
          override fun getAllUsers(): List<UserDataImpl> {
