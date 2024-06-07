@@ -12,6 +12,7 @@ interface UserData {
 }
 
 open class UserDataImpl(
+    var id: Int?,
     override var name: String?,
     override var email: String?,
     override var password: String?,
@@ -21,9 +22,12 @@ open class UserDataImpl(
     override var updatedAt: Date?,
 ) : UserData
 
+data class ResponseIn(val status: Boolean, val response: String, val user: UserDataImpl)
+data class ResponseUp(val status: Boolean, val response: String)
+
 interface User {
-    fun signUp(email: String, name: String, password: String) : String
-    fun logIn(email: String, password: String) : String
+    fun signUp(email: String, name: String, password: String) : ResponseUp
+    fun logIn(email: String, password: String) : ResponseIn
 
     fun getAllUsers() : List<UserDataImpl>
 

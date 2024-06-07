@@ -10,5 +10,5 @@
     <string name="PasswordField">Password</string>
     <string name="PasswordInput">Need a good one...</string>
     <string name="SignUpBtn">Sign Up</string>
-    <string name="SignInBtn">Sign In?</string>
+    <string name="SignInBtn">Sign In</string>
 </resources>

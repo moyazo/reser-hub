@@ -10,11 +10,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class LoginSignUp : ComponentActivity() {
+class LoginSignIn : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_login_sign_up)
+        setContentView(R.layout.activity_login_sign_in)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -22,25 +22,23 @@ class LoginSignUp : ComponentActivity() {
         }
 
         var db = DataBaseController(this);
-        var signUpBtn: Button = findViewById<Button>(R.id.signUpBtn);
+        var signInBtn: Button = findViewById<Button>(R.id.signInBtn);
 
-        signUpBtn.setOnClickListener{
+        signInBtn.setOnClickListener{
             try {
-                var nameValue = findViewById<EditText>(R.id.NameInput).text.toString();
-                var emailValue = findViewById<EditText>(R.id.EmailInput).text.toString();
-                var passValue = findViewById<EditText>(R.id.PasswordInput).text.toString();
+                var emailValue: String = findViewById<EditText>(R.id.EmailInput).text.toString();
+                var passValue: String = findViewById<EditText>(R.id.PasswordInput).text.toString();
 
-                val created = db.signUp(emailValue,nameValue,passValue);
-                if(created.status) {
+                val userFound = db.logIn(emailValue,passValue)
+                if(userFound.status) {
+
+                    Toast.makeText(this, "Se ha encontrado el usuario con email: ${userFound.user.email}", Toast.LENGTH_SHORT).show()
+                } else {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
-                    Toast.makeText(this, created.response, Toast.LENGTH_SHORT).show()
-                } else {
-                    val intent = Intent(this, LoginSignUp::class.java)
-                    startActivity(intent)
-                    Toast.makeText(this, created.response, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Hubo un error, revise sus credenciales", Toast.LENGTH_SHORT).show()
                 }
-            }catch (error: Exception){
+            }catch (error: Exception) {
                 Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         }

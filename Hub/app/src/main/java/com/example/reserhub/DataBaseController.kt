@@ -8,33 +8,36 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.example.reserhub.entities.Controller
 import com.example.reserhub.entities.types.CategoryDataImpl
 import com.example.reserhub.entities.types.ReservaDataImpl
+import com.example.reserhub.entities.types.ResponseIn
+import com.example.reserhub.entities.types.ResponseUp
 import com.example.reserhub.entities.types.ServiceDataImpl
 import com.example.reserhub.entities.types.SubCategoryDataImpl
 import com.example.reserhub.entities.types.UserDataImpl
 
-class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASENAME, null, DATABASE_VERSION),
+class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_NAME , null, DATABASE_VERSION),
     Controller
      {
     companion object{
-        private const val DATABASENAME = "reserhub.db"
+        private const val DATABASE_NAME  = "reserhub.db"
         private const val DATABASE_VERSION = 1
     }
 
-    override fun onCreate(db: SQLiteDatabase?) {
-        val userTableQuery = """
+         override fun onCreate(db: SQLiteDatabase) {
+             // Tus consultas de creación de tablas
+             val userTableQuery = """
              CREATE TABLE users(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name TEXT NOT NULL,
                             email TEXT NOT NULL,
                             password TEXT NOT NULL,
-            				userName TEXT NOT NULL,
-            				rol TEXT NOT NULL,
-            				createdAt DATE NOT NULL,
-                            updatedAt DATE NOT NULL
+            				userName TEXT ,
+            				rol TEXT,
+            				createdAt DATE,
+                            updatedAt DATE
             );
         """.trimIndent()
 
-        val categoryTableQuery = """
+             val categoryTableQuery = """
             CREATE TABLE categories(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name TEXT NOT NULL,
@@ -42,7 +45,7 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASEN
                             updatedAt DATE NOT NULL
             );
         """.trimIndent()
-        val subCategoryTableQuery = """
+             val subCategoryTableQuery = """
             CREATE TABLE subCategories(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name TEXT NOT NULL,
@@ -52,7 +55,7 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASEN
                             CONSTRAINT FK_category_Subcategories FOREIGN KEY (categoryId) REFERENCES categories(id)
             );
         """.trimIndent()
-        val servicesTableQuery = """
+             val servicesTableQuery = """
             CREATE TABLE services(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             title TEXT NOT NULL,
@@ -65,7 +68,7 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASEN
                             CONSTRAINT FK_category_Services FOREIGN KEY (categoryId) REFERENCES categories(id)
             );
         """.trimIndent()
-        val reservasTableQuery = """
+             val reservasTableQuery = """
             CREATE TABLE reservas (
             	id INTEGER PRIMARY KEY AUTOINCREMENT,
                 userId INTEGER NOT NULL,    
@@ -77,13 +80,12 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASEN
             )
         """.trimIndent()
 
-        db?.execSQL(userTableQuery)
-        db?.execSQL(categoryTableQuery)
-        db?.execSQL(subCategoryTableQuery)
-        db?.execSQL(servicesTableQuery)
-        db?.execSQL(reservasTableQuery)
-
-    }
+             db.execSQL(userTableQuery)
+             db.execSQL(categoryTableQuery)
+             db.execSQL(subCategoryTableQuery)
+             db.execSQL(servicesTableQuery)
+             db.execSQL(reservasTableQuery)
+         }
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // Eliminar las tablas si existen y las vuelve a crear
         db.execSQL("DROP TABLE IF EXISTS users")
@@ -95,12 +97,103 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASEN
         onCreate(db)
     }
 
-         override fun signUp(email: String, name: String, password: String): String {
-             TODO("Not yet implemented")
+         override fun signUp(email: String, name: String, password: String): ResponseUp {
+
+             if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                 return ResponseUp(false, "Must fill all fields")
+             }
+
+             val db = writableDatabase
+             val getUsersQuery = """SELECT * FROM users WHERE email = ?"""
+             val cursor = db.rawQuery(getUsersQuery, arrayOf(email))
+
+             if (cursor.moveToFirst()) {
+                 cursor.close()
+                 return ResponseUp(
+                     false,
+                     "User already exists"
+                 ) // El usuario ya existe en la base de datos
+             } else {
+                 val newValues = ContentValues().apply {
+                     put("name", name)
+                     put("email", email)
+                     put("password", password)
+                 }
+                 db.insert("users", null, newValues)
+                 db.close()
+                 return ResponseUp(true, "User created successfully")
+             }
          }
 
-         override fun logIn(email: String, password: String): String {
-             TODO("Not yet implemented")
+
+         @SuppressLint("Range")
+         override fun logIn(email: String, password: String): ResponseIn {
+
+             if(email.isEmpty() || password.isEmpty()){
+                 val user = UserDataImpl(
+                     id = null,
+                     name = null,
+                     email = null,
+                     password = null,
+                     userName = null,
+                     rol = "null",
+                     createdAt = null,
+                     updatedAt = null
+                 )
+                 return ResponseIn(status = true, response = "Something is emty", user)
+             }
+
+             val db = writableDatabase
+             val getUsersQuery = """ SELECT * FROM users WHERE email = ?""";
+             val cursor = db.rawQuery(getUsersQuery, arrayOf(email));
+
+             if(cursor.moveToFirst()) {
+                 val userId = cursor.getInt(cursor.getColumnIndex("id"))
+                 val userName = cursor.getString(cursor.getColumnIndex("name"))
+                 val userEmail = cursor.getString(cursor.getColumnIndex("email"))
+                 val userPassword = cursor.getString(cursor.getColumnIndex("password"))
+                 if(userPassword != password) {
+                     val user = UserDataImpl(
+                         id = null,
+                         name = null,
+                         email = null,
+                         password = null,
+                         userName = null,
+                         rol = "null",
+                         createdAt = null,
+                         updatedAt = null
+                     )
+                     cursor.close()
+                     return ResponseIn(status = false, response = "Wrong credentials", user)
+                 }
+                 val userRol = cursor.getString(cursor.getColumnIndex("rol"))
+
+                 val user = UserDataImpl(
+                     id = userId,
+                     name = userName,
+                     email = userEmail,
+                     password = userPassword,
+                     userName = userName,
+                     rol = userRol,
+                     createdAt = null,
+                     updatedAt = null
+                 )
+                 cursor.close()
+                 return ResponseIn(status = true, response = "User created succesfully", user)
+             }else {
+                 val user = UserDataImpl(
+                     id = null,
+                     name = null,
+                     email = null,
+                     password = null,
+                     userName = null,
+                     rol = "null",
+                     createdAt = null,
+                     updatedAt = null
+                 )
+                 cursor.close()
+                 return ResponseIn(status = true, response = "User do not found", user)
+             }
          }
          override fun getAllUsers(): List<UserDataImpl> {
              TODO("Not yet implemented")

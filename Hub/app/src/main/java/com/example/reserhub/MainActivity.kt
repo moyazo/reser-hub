@@ -1,46 +1,36 @@
 package com.example.reserhub
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.reserhub.ui.theme.ReserHubTheme
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            ReserHubTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
+        DataBaseController(this)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
-    }
-}
+        val signUpBtn: Button = findViewById<Button>(R.id.signUp)
+        // Change activity
+        signUpBtn.setOnClickListener{
+            val intent = Intent(this, LoginSignUp::class.java)
+            startActivity(intent)
+        }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ReserHubTheme {
-        Greeting("Android")
+        val signInpBtn: Button = findViewById<Button>(R.id.signIn)
+        // Change activity
+        signInpBtn.setOnClickListener{
+            val intent = Intent(this, LoginSignIn::class.java)
+            startActivity(intent)
+        }
     }
 }
