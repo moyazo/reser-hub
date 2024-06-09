@@ -7,7 +7,7 @@ interface ServiceData {
     var description: String?
     var startDate: Date?
     var endDate: Date?
-    var categoryId: Int?
+    var categoryId: Int
 }
 
 open class ServiceDataImpl(
@@ -15,7 +15,7 @@ open class ServiceDataImpl(
     override var description: String?,
     override var startDate: Date?,
     override var endDate: Date?,
-    override var categoryId: Int?
+    override var categoryId: Int
 
 ) : ServiceData
 

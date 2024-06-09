@@ -11,4 +11,9 @@
     <string name="PasswordInput">Need a good one...</string>
     <string name="SignUpBtn">Sign Up</string>
     <string name="SignInBtn">Sign In</string>
+    <string name="NavBarCat">Categories</string>
+    <string name="OfertText">Ofertas</string>
+    <string name="ServicesText">Services</string>
+    <string name="DashboarhTitle">ReserHub - Dashboard</string>
+    <string name="YourServices">Your Services</string>
 </resources>
