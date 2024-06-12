@@ -10,7 +10,7 @@
     android:maxHeight="1280dp"
     android:minWidth="360dp"
     android:minHeight="640dp"
-    tools:context=".LoginSignUp">
+    tools:context=".views.login.LoginSignUp">
 
     <ImageView
         android:id="@+id/bgImage"

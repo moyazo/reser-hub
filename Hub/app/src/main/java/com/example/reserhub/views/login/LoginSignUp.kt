@@ -1,4 +1,4 @@
-package com.example.reserhub
+package com.example.reserhub.views.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.reserhub.DataBaseController
+import com.example.reserhub.MainActivity
+import com.example.reserhub.R
+import com.example.reserhub.views.dashboard.SuperAdmin
 
 class LoginSignUp : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,14 +35,21 @@ class LoginSignUp : ComponentActivity() {
                 var passValue = findViewById<EditText>(R.id.PasswordInput).text.toString();
 
                 val created = db.signUp(emailValue,nameValue,passValue);
+
                 if(created.status) {
+                    if(created.user.rol != "ADMIN") {
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra("USER_ID",created.user.id);
+                        startActivity(intent)
+                    }
+                    val intent = Intent(this, SuperAdmin::class.java)
+                    intent.putExtra("USER_ID",created.user.id);
+                    startActivity(intent)
+                    Toast.makeText(this, "Se ha iniciado sesión con ${created.response}", Toast.LENGTH_SHORT).show()
+                } else {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
-                    Toast.makeText(this, created.response, Toast.LENGTH_SHORT).show()
-                } else {
-                    val intent = Intent(this, LoginSignUp::class.java)
-                    startActivity(intent)
-                    Toast.makeText(this, created.response, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "No se pudo iniciar sesión ${created.response}", Toast.LENGTH_SHORT).show()
                 }
             }catch (error: Exception){
                 Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT).show()

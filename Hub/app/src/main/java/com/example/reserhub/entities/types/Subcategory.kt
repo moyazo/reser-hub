@@ -2,11 +2,15 @@ package com.example.reserhub.entities.types
 
 
 interface SubCategoryData {
+    var id: Int
     var name: String?
+    var categoryId: Int
 }
 
 open class SubCategoryDataImpl(
+    override var id: Int,
     override var name: String?,
+    override var categoryId: Int
 ) : SubCategoryData
 
 interface SubCategory {

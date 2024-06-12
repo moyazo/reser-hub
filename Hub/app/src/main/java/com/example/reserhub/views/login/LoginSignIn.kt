@@ -1,7 +1,8 @@
-package com.example.reserhub
+package com.example.reserhub.views.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -9,6 +10,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.reserhub.DataBaseController
+import com.example.reserhub.MainActivity
+import com.example.reserhub.R
+import com.example.reserhub.views.dashboard.SuperAdmin
 
 class LoginSignIn : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +35,17 @@ class LoginSignIn : ComponentActivity() {
                 var passValue: String = findViewById<EditText>(R.id.PasswordInput).text.toString();
 
                 val userFound = db.logIn(emailValue,passValue)
+                Log.d("Test","$userFound")
                 if(userFound.status) {
-
-                    Toast.makeText(this, "Se ha encontrado el usuario con email: ${userFound.user.email}", Toast.LENGTH_SHORT).show()
+                    if(userFound.user.rol != "ADMIN") {
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra("USER_ID",userFound.user.id);
+                        startActivity(intent)
+                    }
+                    val intent = Intent(this, SuperAdmin::class.java)
+                    intent.putExtra("USER_ID",userFound.user.id);
+                    startActivity(intent)
+                    Toast.makeText(this, "Se ha iniciado sesión con ${userFound.response}", Toast.LENGTH_SHORT).show()
                 } else {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
