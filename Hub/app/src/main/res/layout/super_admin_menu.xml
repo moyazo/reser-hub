@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/menuContainer"
+        android:id="@+id/setDialogContainer"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -23,7 +23,7 @@
             app:srcCompat="@drawable/baseline_cancel_24" />
 
         <LinearLayout
-            android:id="@+id/userOptContainer"
+            android:id="@+id/upAllContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

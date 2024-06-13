@@ -14,6 +14,7 @@ import com.example.reserhub.DataBaseController
 import com.example.reserhub.MainActivity
 import com.example.reserhub.R
 import com.example.reserhub.views.dashboard.SuperAdmin
+import com.example.reserhub.views.hub.hub
 
 class LoginSignIn : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,15 +38,21 @@ class LoginSignIn : ComponentActivity() {
                 val userFound = db.logIn(emailValue,passValue)
                 Log.d("Test","$userFound")
                 if(userFound.status) {
-                    if(userFound.user.rol != "ADMIN") {
+                    if(userFound.user.rol == "ADMIN") {
+                        val intent = Intent(this, SuperAdmin::class.java)
+                        intent.putExtra("USER_ID",userFound.user.id);
+                        startActivity(intent)
+                    } else if(userFound.user.rol == "CLIENT"){
+                        val intent = Intent(this, hub::class.java)
+                        intent.putExtra("USER_ID",userFound.user.id);
+                        startActivity(intent)
+                    } else {
                         val intent = Intent(this, MainActivity::class.java)
                         intent.putExtra("USER_ID",userFound.user.id);
                         startActivity(intent)
                     }
-                    val intent = Intent(this, SuperAdmin::class.java)
-                    intent.putExtra("USER_ID",userFound.user.id);
-                    startActivity(intent)
-                    Toast.makeText(this, "Se ha iniciado sesión con ${userFound.response}", Toast.LENGTH_SHORT).show()
+
+                    Toast.makeText(this, "Se ha iniciado sesión con ${userFound.user.rol}", Toast.LENGTH_SHORT).show()
                 } else {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)

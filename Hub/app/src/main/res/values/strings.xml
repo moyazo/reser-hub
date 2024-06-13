@@ -54,6 +54,7 @@
     <string name="MenuAdminCategories">Categories</string>
     <string name="MenuAdminSbuCat">Subcategories</string>
     <string name="MenuAdminLogOut">Log Out</string>
+    <string name="ProfileText">Profile</string>
 
     <string name="NonText">...</string>
     <string name="ExitBtn">X</string>

@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.example.reserhub.entities.Controller
 import com.example.reserhub.entities.types.CategoryDataImpl
 import com.example.reserhub.entities.types.ReservaDataImpl
@@ -463,8 +464,8 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
 
          override fun getCategory(id: Int): CategoryDataImpl {
              val db = writableDatabase
-             val getCategoryQuery = "SELECT * FROM categories WHERE id = ?"
-             val cursor = db.rawQuery(getCategoryQuery, null)
+             val getCategoryQuery = """SELECT * FROM categories WHERE id = ?"""
+             val cursor = db.rawQuery(getCategoryQuery, arrayOf("$id"))
 
              val categoryNull = CategoryDataImpl(null, null)
 
@@ -473,9 +474,11 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
                  val categoryName = cursor.getString(cursor.getColumnIndexOrThrow("name"))
                  val category = CategoryDataImpl(categoryId, categoryName)
                  cursor.close()
+                 db.close()
                  return category
              }
-
+             cursor.close()
+             db.close()
              return categoryNull
          }
 

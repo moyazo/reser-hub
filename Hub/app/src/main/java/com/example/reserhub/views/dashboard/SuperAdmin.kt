@@ -3,7 +3,6 @@ package com.example.reserhub.views.dashboard
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -21,15 +20,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.marginStart
-import androidx.core.view.setMargins
 import com.example.reserhub.DataBaseController
 import com.example.reserhub.R
 import com.example.reserhub.entities.types.CategoryDataImpl
 import com.example.reserhub.entities.types.ServiceDataImpl
 import com.example.reserhub.entities.types.SubCategoryDataImpl
 import com.example.reserhub.entities.types.UserDataImpl
-import java.sql.Date
 import java.time.LocalDate
 
 class SuperAdmin : ComponentActivity() {
@@ -376,7 +372,7 @@ class SuperAdmin : ComponentActivity() {
                 dialog.cancel()
             }
 
-            val userItem = dialog.findViewById<LinearLayout>(R.id.userOptContainer)
+            val userItem = dialog.findViewById<LinearLayout>(R.id.UsersContainer)
             val serviceContainer= findViewById<LinearLayout>(R.id.ServicesContainer)
             val catContainer = findViewById<LinearLayout>(R.id.CategoriesContainer)
             val subCatContainer = findViewById<LinearLayout>(R.id.SubCategoriesContainer)
