@@ -25,7 +25,7 @@ open class ServiceDataImpl(
 
 interface Service {
 
-    fun getAllServices() : List<ServiceDataImpl>
+    fun getAllServices(catFilter: Int?,browserFilter: String?) : List<ServiceDataImpl>
     fun getService(id: Int) : ServiceDataImpl
     fun getServicesByUser(userId: Int?) : List<ServiceDataImpl>
     fun createService(newDataImpl: ServiceDataImpl) : Boolean

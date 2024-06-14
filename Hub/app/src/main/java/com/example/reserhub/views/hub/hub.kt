@@ -5,10 +5,13 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
@@ -21,15 +24,39 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.RecyclerView
 import com.example.reserhub.DataBaseController
 import com.example.reserhub.R
+import com.example.reserhub.entities.types.CategoryDataImpl
 import com.example.reserhub.entities.types.ServiceDataImpl
 
 class hub : ComponentActivity() {
+    // Función para cargar servicios en el ScrollView
 
+    private fun  insertCatInDialog(category: CategoryDataImpl,linearDialogLayout:LinearLayout) {
+        val textCatView = TextView(this).apply {
+            id = category.id!!
+            text = category.name
+            textSize = 18f
+            setTextColor(resources.getColor(android.R.color.black, null))
+            gravity = android.view.Gravity.CENTER
+            setPadding(0,16,0,26)
+        }
+
+        var layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+        }
+        textCatView.layoutParams = layoutParams
+        linearDialogLayout.addView(textCatView)
+    }
 
 
     private fun insertOnLayout(service: ServiceDataImpl, layout: ScrollView) {
+
         // Crear ImageView y establecer propiedades
         val imageView = ImageView(this).apply {
             setImageResource(R.drawable.sevillaartardecer)
@@ -142,14 +169,45 @@ class hub : ComponentActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        var catFilter: Int? = null
+        var browserFilter: String? = null
+        var browser = findViewById<EditText>(R.id.browserHeader)
+
 
         val db = DataBaseController(this)
-        val services = db.getAllServices()
+
 
         val layout = findViewById<ScrollView>(R.id.servicesLayout)
 
-        for(service in services){
-            insertOnLayout(service,layout)
+        fun loadServices() {
+            val services = db.getAllServices(catFilter,browserFilter)
+            Log.d("idCat","$catFilter")
+            findViewById<LinearLayout>(R.id.linerServiceLayout).apply {
+                removeAllViewsInLayout()
+            }
+
+            for(service in services) {
+                insertOnLayout(service, layout)
+            }
+        }
+        loadServices()
+
+        browser.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
+                val query = browser.text.toString()
+                browserFilter = query
+                loadServices()
+                true // Indica que la acción ha sido manejada
+            } else {
+                false
+            }
+        })
+
+        val clearBtn = findViewById<ImageView>(R.id.clearFilters)
+        clearBtn.setOnClickListener{
+            catFilter = null
+            browserFilter = null
+            loadServices()
         }
 
         val setBtn = findViewById<ImageView>(R.id.setBtn)
@@ -176,5 +234,29 @@ class hub : ComponentActivity() {
         scrollUpBtn.setOnClickListener{
             layout.smoothScrollTo(0,0)
         }
+
+        val categoryDialog = findViewById<TextView>(R.id.catgeoriesTextHeader)
+        categoryDialog.setOnClickListener{
+            val dialog = Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(true)
+            dialog.setContentView(R.layout.change_catgeory_dialog)
+
+            val categories = db.getAllCategories()
+            val linearDialogLayout = dialog.findViewById<LinearLayout>(R.id.linearDialogLayout)
+            for(category in categories){
+                insertCatInDialog(category,linearDialogLayout)
+                val cat = dialog.findViewById<TextView>(category.id!!)
+                cat.setOnClickListener{
+                    catFilter = cat.id
+                    loadServices()
+                    dialog.cancel()
+                }
+            }
+
+                dialog.show()
+        }
+
+
     }
 }

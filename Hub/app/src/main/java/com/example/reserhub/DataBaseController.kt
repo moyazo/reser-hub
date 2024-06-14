@@ -536,10 +536,27 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
              return rowsAffected > 0
          }
 
-         override fun getAllServices(): List<ServiceDataImpl> {
+         override fun getAllServices(catFilter: Int?,browserFilter: String?): List<ServiceDataImpl> {
              val db = writableDatabase
-             val getServicesQuery = "SELECT * FROM services"
-             val cursor = db.rawQuery(getServicesQuery, null)
+             var getServicesQuery = "SELECT * FROM services"
+             var selectionArgs: Array<String>? = null
+
+             if (catFilter != null) {
+                 getServicesQuery = "SELECT * FROM services WHERE categoryId = ?"
+                 selectionArgs = arrayOf(catFilter.toString())
+             }
+
+             if (!browserFilter.isNullOrBlank()) {
+                 if (selectionArgs == null) {
+                     getServicesQuery += " WHERE title LIKE ?"
+                     selectionArgs = arrayOf("%$browserFilter%")
+                 } else {
+                     getServicesQuery += " AND title LIKE ?"
+                     selectionArgs += arrayOf("%$browserFilter%")
+                 }
+             }
+
+             val cursor = db.rawQuery(getServicesQuery, selectionArgs)
              val serviceList = mutableListOf<ServiceDataImpl>()
 
              while (cursor.moveToNext()) {

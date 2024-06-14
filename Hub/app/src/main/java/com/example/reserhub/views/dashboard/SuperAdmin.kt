@@ -344,7 +344,7 @@ class SuperAdmin : ComponentActivity() {
 
         val db = DataBaseController(this)
         val users = db.getAllUsers()
-        val services = db.getAllServices()
+        val services = db.getAllServices(0,"")
         val categories = db.getAllCategories()
         val subCategories = db.getAllSubCategories()
         for(user in users){
