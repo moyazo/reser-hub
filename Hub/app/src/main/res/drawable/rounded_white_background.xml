@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/rounded_white_background.xml -->
+<!-- shadowed_rounded_bg.xml -->
+<!-- shadowed_rounded_bg.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Sombra -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#33000000" /> <!-- Color de la sombra -->
+            <corners android:radius="10dp" /> <!-- Radio de las esquinas -->
+        </shape>
+    </item>
+    <!-- Fondo redondeado blanco -->
+    <item android:top="2dp" android:bottom="1dp" android:left="1dp" android:right="1dp"> <!-- Ajusta el desplazamiento vertical para la sombra -->
+        <shape android:shape="rectangle">
+            <solid android:color="#ffffff" /> <!-- Color de fondo -->
+            <corners android:radius="10dp" /> <!-- Radio de las esquinas -->
+        </shape>
+    </item>
+</layer-list>
+

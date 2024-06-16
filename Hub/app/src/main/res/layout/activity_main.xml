@@ -19,16 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="371dp"
-            android:contentDescription="@string/app_name"
-            app:srcCompat="@drawable/logotext" />
-
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,9 +46,10 @@
             android:id="@+id/signUp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/signUp"
+            android:text="@string/SignUpBtn"
+            android:textColor="@color/white"
             android:visibility="visible"
-            tools:background="@drawable/btn_radius" />
+            tools:background="@drawable/round_btn" />
 
         <Space
             android:layout_width="wrap_content"
@@ -68,9 +60,10 @@
             android:id="@+id/signIn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/signIn"
+            android:text="@string/SignInBtn"
+            android:textColor="@color/white"
             android:visibility="visible"
-            tools:background="@drawable/btn_radius" />
+            tools:background="@drawable/round_btn" />
 
         <Space
             android:layout_width="wrap_content"

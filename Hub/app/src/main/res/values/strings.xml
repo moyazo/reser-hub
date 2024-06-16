@@ -1,19 +1,66 @@
 <resources>
-    <string name="app_name">Reser-Hub</string>
-    <string name="greeting">Hola</string>
-    <string name="signUp">Sign Up</string>
-    <string name="signIn">Sign In</string>
-    <string name="title_activity_login">SignUp Activity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="info_login">Por favor ingresa sus datos</string>
-    <string name="name_field">Name</string>
-    <string name="email_field">Email</string>
-    <string name="pass_field">Password</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="app_name">ReserHub</string>
+    <string name="contentDes">img</string>
+    <string name="welcomeText">Welcome!</string>
+    <string name="credentials">Please write your credentials!</string>
+    <string name="NameField">Name</string>
+    <string name="UserNameField">User Name</string>
+    <string name="NameInput">Pepito...</string>
+    <string name="EmailField">Email</string>
+    <string name="EmailInput">Pepito@...</string>
+    <string name="PasswordField">Password</string>
+    <string name="PasswordInput">Need a good one...</string>
+    <string name="SignUpBtn">Sign Up</string>
+    <string name="SignInBtn">Sign In</string>
+    <string name="NavBarCat">Categories</string>
+    <string name="OfertText">Ofertas</string>
+    <string name="ServicesText">Services</string>
+    <string name="DashboarhTitle">ReserHub - Dashboard</string>
+    <string name="YourServices">Your Services</string>
+
+
+    <string name="HeaderDashTitle">ReserHub - SuperAdmin</string>
+    <string name="UsersTableTitle">All Users</string>
+    <string name="ServicesTableTitle">All Services</string>
+    <string name="CategoriesTableTitle">All Categories</string>
+    <string name="SubCategoriesTableTitle">All SubCategories</string>
+    <string name="CreateTextBtn">Create</string>
+    <string name="IdHeader">Id</string>
+    <string name="NameHeader">Name</string>
+    <string name="RolHeader">Rol</string>
+    <string name="EmailHeader">Email</string>
+    <string name="TitleHeader">Title</string>
+    <string name="CategoryIdHeader">CategoryId</string>
+    <string name="UserIdHeader">UserId</string>
+
+    <string name="NewUser">New User</string>
+    <string name="NewService">New Service</string>
+    <string name="NewCategory">New Category</string>
+    <string name="NewSubCategory">New SubCategory</string>
+    <string name="EditUser">Edit User</string>
+    <string name="EditService">Edit Service</string>
+    <string name="EditCategory">Edit Category</string>
+    <string name="EditSubCategory">Edit SubCategory</string>
+    <string name="DeleteUser">Delete User</string>
+    <string name="DeleteService">Delete Service</string>
+    <string name="DeleteCategory">Delete Category</string>
+    <string name="DeleteSubCategory">Delete SubCategory</string>
+    <string name="CreateText">Create</string>
+    <string name="EditText">Edit</string>
+    <string name="DeleteText">Delete</string>
+    <string name="CancelText">Cancel</string>
+    <string name="MenuAdminUser">Users</string>
+    <string name="MenuAdminService">Services</string>
+    <string name="MenuAdminCategories">Categories</string>
+    <string name="MenuAdminSbuCat">Subcategories</string>
+    <string name="MenuAdminLogOut">Log Out</string>
+    <string name="ProfileText">Profile</string>
+    <string name="HubText">Hub</string>
+    <string name="YourData">Tus Datos</string>
+    <string name="SureText">¿Seguro que quieres editar?</string>
+
+
+    <string name="NonText">...</string>
+    <string name="ExitBtn">X</string>
+    <string name="DeleteAskUser">¿Seguro que quieres borrar el Usuario?</string>
 </resources>
