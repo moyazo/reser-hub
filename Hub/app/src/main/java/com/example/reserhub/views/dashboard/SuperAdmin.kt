@@ -117,7 +117,7 @@ class SuperAdmin : ComponentActivity() {
 
                    createBtnAction.setOnClickListener{
 
-                       val newName = dialog.findViewById<EditText>(R.id.nameInput).text.toString()
+                       val newName = dialog.findViewById<EditText>(R.id.nameField).text.toString()
                        val newUserName = dialog.findViewById<EditText>(R.id.userNameInput).text.toString()
                        val newUserRol = dialog.findViewById<EditText>(R.id.rolInput).text.toString()
                        val newUserPass = dialog.findViewById<EditText>(R.id.passInput).text.toString()
@@ -125,7 +125,7 @@ class SuperAdmin : ComponentActivity() {
                        val currentDate = LocalDate.now()
 
                        val newUser = UserDataImpl(0,newName,user.email,newUserPass,newUserName,newUserRol,"$currentDate","$currentDate")
-                       db.modifyUser(user.id,newUser)
+                       db.modifyUser("${user.id}",newUser)
                        db.close( )
                        recreate()
                        Toast.makeText(this, "Usuario creado", Toast.LENGTH_SHORT).show()
@@ -155,7 +155,7 @@ class SuperAdmin : ComponentActivity() {
 
 
                        val newUserEmail = dialog.findViewById<EditText>(R.id.EmailInput).text.toString()
-                       val newName = dialog.findViewById<EditText>(R.id.nameInput).text.toString()
+                       val newName = dialog.findViewById<EditText>(R.id.nameField).text.toString()
                        val newUserName = dialog.findViewById<EditText>(R.id.userNameInput).text.toString()
                        val newUserRol = dialog.findViewById<EditText>(R.id.rolInput).text.toString()
                        val newUserPass = dialog.findViewById<EditText>(R.id.passInput).text.toString()
@@ -344,7 +344,7 @@ class SuperAdmin : ComponentActivity() {
 
         val db = DataBaseController(this)
         val users = db.getAllUsers()
-        val services = db.getAllServices(0,"")
+        val services = db.getAllServices(null,null)
         val categories = db.getAllCategories()
         val subCategories = db.getAllSubCategories()
         for(user in users){
@@ -395,7 +395,7 @@ class SuperAdmin : ComponentActivity() {
                 }
                 dialog.cancel()
             }
-            val serviceItem = dialog.findViewById<LinearLayout>(R.id.serviceOptContainer)
+            val serviceItem = dialog.findViewById<LinearLayout>(R.id.serviceOptContainerHub)
             serviceItem.setOnClickListener{
                 if (serviceContainer.visibility == View.GONE) {
                     serviceContainer.visibility = View.VISIBLE

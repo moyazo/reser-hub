@@ -13,6 +13,12 @@
         android:theme="@style/Theme.ReserHub"
         tools:targetApi="31">
         <activity
+            android:name=".views.profile.ProfileClient"
+            android:exported="false" />
+        <activity
+            android:name=".views.profile.profile_client"
+            android:exported="false" />
+        <activity
             android:name=".views.hub.hub"
             android:exported="false" />
         <activity

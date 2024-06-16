@@ -55,7 +55,9 @@
     <string name="MenuAdminSbuCat">Subcategories</string>
     <string name="MenuAdminLogOut">Log Out</string>
     <string name="ProfileText">Profile</string>
-
+    <string name="HubText">Hub</string>
+    <string name="YourData">Tus Datos</string>
+    <string name="SureText">¿Seguro que quieres editar?</string>
 
 
     <string name="NonText">...</string>

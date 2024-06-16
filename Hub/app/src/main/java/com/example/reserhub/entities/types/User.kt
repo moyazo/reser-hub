@@ -31,13 +31,13 @@ interface User {
 
     fun getAllUsers() : List<UserDataImpl>
 
-    fun getUserById(id: Int) : UserDataImpl
+    fun getUserById(id: String) : UserDataImpl
 
     fun getUserByEmail(email: String?) : UserDataImpl
 
     fun createUser(newData: UserDataImpl) : Boolean
 
-    fun modifyUser(id: Int?, newData: UserDataImpl) : Boolean
+    fun modifyUser(id: String?, newData: UserDataImpl) : Boolean
 
     fun deleteUser(id: Int?) : Boolean
 

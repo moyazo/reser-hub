@@ -40,15 +40,16 @@ class LoginSignIn : ComponentActivity() {
                 if(userFound.status) {
                     if(userFound.user.rol == "ADMIN") {
                         val intent = Intent(this, SuperAdmin::class.java)
-                        intent.putExtra("USER_ID",userFound.user.id);
+                        intent.putExtra("USER_ID","${userFound.user.id}");
                         startActivity(intent)
                     } else if(userFound.user.rol == "CLIENT"){
                         val intent = Intent(this, hub::class.java)
-                        intent.putExtra("USER_ID",userFound.user.id);
+
+                        intent.putExtra("USER_ID","${userFound.user.id}");
                         startActivity(intent)
                     } else {
                         val intent = Intent(this, MainActivity::class.java)
-                        intent.putExtra("USER_ID",userFound.user.id);
+                        intent.putExtra("USER_ID","${userFound.user.id}");
                         startActivity(intent)
                     }
 

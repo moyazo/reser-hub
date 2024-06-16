@@ -15,6 +15,7 @@ import com.example.reserhub.entities.types.ServiceDataImpl
 import com.example.reserhub.entities.types.SubCategoryDataImpl
 import com.example.reserhub.entities.types.UserDataImpl
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Date
 import java.util.Locale
 
@@ -321,14 +322,15 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
          }
 
 
-         override fun getUserById(id: Int): UserDataImpl {
+         override fun getUserById(id: String): UserDataImpl {
              val db = writableDatabase
-             val getUsersQuery = "SELECT * FROM users WHERE id = ?"
-             val cursor = db.rawQuery(getUsersQuery, null)
+             val getUsersQuery = """SELECT * FROM users WHERE id = ?"""
+             val cursor = db.rawQuery(getUsersQuery, arrayOf(id))
 
              val userNull = UserDataImpl(null, null, null,null,null,null,null,null)
 
              if (cursor.moveToFirst()) {
+                 Log.d("Adios","Me voy")
                  val userId = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
                  val userName = cursor.getString(cursor.getColumnIndexOrThrow("name"))
                  val userEmail = cursor.getString(cursor.getColumnIndexOrThrow("email"))
@@ -340,6 +342,7 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
 
                  val user = UserDataImpl(userId, userName, userEmail,userPassword,userUserName,userRol,userCreatedAt,userUpdatedAt)
                  cursor.close()
+
                  return user
              }
 
@@ -397,24 +400,38 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
              }
          }
 
-         override fun modifyUser(id: Int?, newData: UserDataImpl): Boolean {
+         override fun modifyUser(id: String?, newData: UserDataImpl): Boolean {
              val db = writableDatabase
 
              // Consulta para encontrar el usuario con el ID dado
              val getUserQuery = "SELECT * FROM users WHERE id = ?"
-             val cursor = db.rawQuery(getUserQuery, arrayOf(id.toString()))
+             val cursor = db.rawQuery(getUserQuery, arrayOf(id))
 
              // Verifica si el cursor tiene algún resultado
              if (cursor.moveToFirst()) {
                  // Crea un objeto ContentValues con los nuevos valores
                  val newValues = ContentValues().apply {
-                     put("name", newData.name)
-                     put("email", newData.email)
-                     put("password", newData.password)
-                     put("userName", newData.userName)
-                     put("rol", newData.rol)
-                     put("createdAt", newData.createdAt)
-                     put("updatedAt", newData.updatedAt)
+                     if(newData.name?.isNotEmpty() == true) {
+                         put("name", newData.name)
+                     }
+                     if(newData.email?.isNotEmpty()== true) {
+                         put("email", newData.email)
+                     }
+                     if(newData.password?.isNotEmpty()== true) {
+                         put("password", newData.password)
+                     }
+                     if(newData.userName?.isNotEmpty() == true) {
+                         put("userName", newData.userName)
+                     }
+                     if(newData.rol?.isNotEmpty() == true) {
+                         put("rol", newData.rol)
+                     }
+                     if(newData.createdAt?.isNotEmpty() == true) {
+                         put("createdAt", newData.createdAt)
+                     }
+                     if(newData.updatedAt?.isNotEmpty() == true) {
+                         put("updatedAt", newData.updatedAt)
+                     }
                  }
 
                  // Actualiza el usuario con los nuevos valores
@@ -580,7 +597,31 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
          }
 
          override fun getService(id: Int): ServiceDataImpl {
-             TODO("Not yet implemented")
+             val db = writableDatabase
+             val getServiceQuery = """ SELECT * FROM services WHERE id = ?"""
+             val cursor = db.rawQuery(getServiceQuery, arrayOf("$id"))
+             if (cursor.moveToFirst()){
+                 val serviceId = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+                 val serviceName = cursor.getString(cursor.getColumnIndexOrThrow("title"))
+                 val serviceDescription = cursor.getString(cursor.getColumnIndexOrThrow("description"))
+                 val serviceStartDate = cursor.getString(cursor.getColumnIndexOrThrow("startDate"))
+                 val serviceEndDate = cursor.getString(cursor.getColumnIndexOrThrow("endDate"))
+                 val serviceCategoryId = cursor.getString(cursor.getColumnIndexOrThrow("categoryId"))
+                 val serviceToInt = serviceCategoryId.toInt()
+                 val serviceUserId = cursor.getString(cursor.getColumnIndexOrThrow("userId"))
+                 val userToInt = serviceUserId.toInt()
+                 // Aquí obtienes los demás datos del servicio según sea necesario
+
+                 // Crea un objeto ServiceDataImpl con los datos obtenidos
+                 val service = ServiceDataImpl(serviceId, serviceName, serviceDescription, serviceStartDate, serviceEndDate, serviceToInt,userToInt)
+                 cursor.close()
+                 db.close()
+                 return service
+             }
+             cursor.close()
+             db.close()
+             val service = ServiceDataImpl(0, null, null, null, null, 0,0)
+             return service
          }
 
          override fun getServicesByUser(userId: Int?): List<ServiceDataImpl> {
@@ -626,8 +667,21 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
              TODO("Not yet implemented")
          }
 
-         override fun getAllReservaOfUser(userId: Int): List<ReservaDataImpl> {
-             TODO("Not yet implemented")
+         override fun getAllReservaOfUser(userId: String): List<ServiceDataImpl> {
+             val db = writableDatabase
+             var getReservasQuery = """SELECT * FROM reservas WHERE userId = ?"""
+             val cursor = db.rawQuery(getReservasQuery, arrayOf(userId))
+             val servicesList = mutableListOf<ServiceDataImpl>()
+
+
+             while (cursor.moveToNext()) {
+                 val serviceId = cursor.getInt(cursor.getColumnIndexOrThrow("serviceId"))
+                 val service = getService(serviceId)
+                 servicesList.add(service)
+             }
+
+             cursor.close()
+             return servicesList
          }
 
          override fun getReserva(id: Int, userId: Int): ReservaDataImpl {
@@ -635,7 +689,18 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
          }
 
          override fun createReserva(newDataImpl: ReservaDataImpl): Boolean {
-             TODO("Not yet implemented")
+             val db = writableDatabase
+
+             val newValues = ContentValues().apply {
+                 put("userId", newDataImpl.userId)
+                 put("serviceId", newDataImpl.serviceId)
+                 put("createdAt","${LocalDate.now()}")
+                 put("updatedAt", "${LocalDate.now()}")
+             }
+
+             val newId = db.insert("reservas", null, newValues)
+             db.close()
+             return newId.toInt() != -1
          }
 
          override fun modifyReserva(id: Int, userId: Int, newData: ReservaDataImpl): Boolean {
