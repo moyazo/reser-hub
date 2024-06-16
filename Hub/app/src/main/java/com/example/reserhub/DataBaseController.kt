@@ -231,10 +231,16 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
                      userNull
                  ) // El usuario ya existe en la base de datos
              } else {
+                 val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                 val currentDate = sdf.format(Date())
                  val newValues = ContentValues().apply {
                      put("name", name)
                      put("email", email)
                      put("password", password)
+                     put("userName", "")
+                     put("rol","CLIENT")
+                     put("createdAt", currentDate)
+                     put("updatedAt", currentDate)
                  }
                  db.insert("users", null, newValues)
                  val user: UserDataImpl = getUserByEmail(email)

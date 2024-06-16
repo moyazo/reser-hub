@@ -2,6 +2,7 @@ package com.example.reserhub.views.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -13,6 +14,7 @@ import com.example.reserhub.DataBaseController
 import com.example.reserhub.MainActivity
 import com.example.reserhub.R
 import com.example.reserhub.views.dashboard.SuperAdmin
+import com.example.reserhub.views.hub.hub
 
 class LoginSignUp : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,15 +39,18 @@ class LoginSignUp : ComponentActivity() {
                 val created = db.signUp(emailValue,nameValue,passValue);
 
                 if(created.status) {
-                    if(created.user.rol != "ADMIN") {
-                        val intent = Intent(this, MainActivity::class.java)
-                        intent.putExtra("USER_ID",created.user.id);
+
+                    if(created.user.rol == "CLIENT") {
+                        Log.d("Rol","${created.user.rol}")
+                        val intent = Intent(this, hub::class.java)
+                        intent.putExtra("USER_ID","${created.user.id}");
                         startActivity(intent)
+                    } else {
+                        val intent = Intent(this, SuperAdmin::class.java)
+                        intent.putExtra("USER_ID","${created.user.id}");
+                        startActivity(intent)
+                        Toast.makeText(this, "Se ha iniciado sesión con ${created.response}", Toast.LENGTH_SHORT).show()
                     }
-                    val intent = Intent(this, SuperAdmin::class.java)
-                    intent.putExtra("USER_ID",created.user.id);
-                    startActivity(intent)
-                    Toast.makeText(this, "Se ha iniciado sesión con ${created.response}", Toast.LENGTH_SHORT).show()
                 } else {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
