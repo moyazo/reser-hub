@@ -44,7 +44,7 @@ class LoginSignIn : ComponentActivity() {
                         startActivity(intent)
                     } else if(userFound.user.rol == "CLIENT"){
                         val intent = Intent(this, hub::class.java)
-
+                        Log.d("Test","${userFound.user.id}")
                         intent.putExtra("USER_ID","${userFound.user.id}");
                         startActivity(intent)
                     } else {

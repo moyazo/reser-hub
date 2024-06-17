@@ -34,7 +34,7 @@ class hub : ComponentActivity() {
 
     private fun bookService(serviceId: Int){
         val userId = intent.getStringExtra("USER_ID")
-        Log.d("reserva","booking")
+        Log.d("reserva","$userId")
         val db = DataBaseController(this)
         val reserva = ReservaDataImpl(userId,serviceId)
         db.createReserva(reserva)

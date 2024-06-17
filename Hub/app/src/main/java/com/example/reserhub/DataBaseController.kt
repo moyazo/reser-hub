@@ -19,7 +19,8 @@ import java.time.LocalDate
 import java.util.Date
 import java.util.Locale
 
-class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_NAME , null, DATABASE_VERSION),
+class DataBaseController(context: Context): SQLiteOpenHelper
+    (context, DATABASE_NAME , null, DATABASE_VERSION),
     Controller
      {
     companion object{
@@ -223,14 +224,6 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
              val getUsersQuery = """SELECT * FROM users WHERE email = ?"""
              val cursor = db.rawQuery(getUsersQuery, arrayOf(email))
 
-             if (cursor.moveToFirst()) {
-                 cursor.close()
-                 return ResponseUp(
-                     false,
-                     "User already exists",
-                     userNull
-                 ) // El usuario ya existe en la base de datos
-             } else {
                  val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
                  val currentDate = sdf.format(Date())
                  val newValues = ContentValues().apply {
@@ -246,7 +239,7 @@ class DataBaseController(context: Context): SQLiteOpenHelper (context, DATABASE_
                  val user: UserDataImpl = getUserByEmail(email)
                  db.close()
                  return ResponseUp(true, "User created successfully",user)
-             }
+
          }
 
 

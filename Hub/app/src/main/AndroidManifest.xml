@@ -16,19 +16,10 @@
             android:name=".views.profile.ProfileClient"
             android:exported="false" />
         <activity
-            android:name=".views.profile.profile_client"
-            android:exported="false" />
-        <activity
             android:name=".views.hub.hub"
             android:exported="false" />
         <activity
             android:name=".views.dashboard.SuperAdmin"
-            android:exported="false" />
-        <activity
-            android:name=".DashboardCompany"
-            android:exported="false" />
-        <activity
-            android:name=".HubServices"
             android:exported="false" />
         <activity
             android:name=".views.login.LoginSignIn"
@@ -39,7 +30,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.ReserHub">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

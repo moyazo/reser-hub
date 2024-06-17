@@ -40,6 +40,4 @@ interface User {
     fun modifyUser(id: String?, newData: UserDataImpl) : Boolean
 
     fun deleteUser(id: Int?) : Boolean
-
-    // TODO: para ambos roles, edición de "mi cuenta"
 }
