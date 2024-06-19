@@ -19,5 +19,4 @@ interface Reserva {
     fun modifyReserva(id: Int, userId: Int, newData: ReservaDataImpl) : Boolean
     fun deleteReserva(id: Int,userId: Int) : Boolean
 
-    // TODO: para ambos roles, edición de "mi cuenta"
 }

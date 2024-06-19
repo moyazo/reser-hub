@@ -29,7 +29,7 @@ import com.example.reserhub.entities.types.ServiceDataImpl
 import com.example.reserhub.views.profile.ProfileClient
 import com.example.reserhub.views.profile.ProfileCompany
 
-class hub : ComponentActivity() {
+class Hub : ComponentActivity() {
     // Función para cargar servicios en el ScrollView
 
     private fun bookService(serviceId: Int){
@@ -46,11 +46,11 @@ class hub : ComponentActivity() {
             text = category.name
             textSize = 18f
             setTextColor(resources.getColor(android.R.color.black, null))
-            gravity = android.view.Gravity.CENTER
+            gravity = Gravity.CENTER
             setPadding(0,16,0,26)
         }
 
-        var layoutParams = LinearLayout.LayoutParams(
+        val layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
@@ -61,6 +61,7 @@ class hub : ComponentActivity() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun insertOnLayout(service: ServiceDataImpl, layout: ScrollView) {
 
         // Crear ImageView y establecer propiedades
@@ -125,11 +126,11 @@ class hub : ComponentActivity() {
             addView(dateText)
             addView(categoryText)
         }
-        var newLayout = LinearLayout(this).apply{
+        val newLayout = LinearLayout(this).apply{
             orientation = LinearLayout.VERTICAL
             addView(imageView)
             addView(horLayout)
-            val layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
@@ -141,7 +142,7 @@ class hub : ComponentActivity() {
                 5 // Altura del divisor
             )
 
-            setBackgroundColor(ContextCompat.getColor(this@hub, R.color.purple_500)) // Color del divisor
+            setBackgroundColor(ContextCompat.getColor(this@Hub, R.color.purple_500)) // Color del divisor
         }
         val space1 = Space(this).apply {
             layoutParams = LinearLayout.LayoutParams(
@@ -182,7 +183,7 @@ class hub : ComponentActivity() {
 
         var catFilter: Int? = null
         var browserFilter: String? = null
-        var browser = findViewById<EditText>(R.id.browserHeader)
+        val browser = findViewById<EditText>(R.id.browserHeader)
 
 
         val db = DataBaseController(this)
@@ -203,7 +204,7 @@ class hub : ComponentActivity() {
         }
         loadServices()
 
-        browser.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+        browser.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
                 val query = browser.text.toString()
                 browserFilter = query
@@ -239,11 +240,11 @@ class hub : ComponentActivity() {
             profileBtn.setOnClickListener{
                 if(user.rol == "CLIENT"){
                     val intent = Intent(this, ProfileClient::class.java)
-                    intent.putExtra("USER_ID",userId);
+                    intent.putExtra("USER_ID",userId)
                     startActivity(intent)
                 } else {
                     val intent = Intent(this, ProfileCompany::class.java)
-                    intent.putExtra("USER_ID",userId);
+                    intent.putExtra("USER_ID",userId)
                     startActivity(intent)
                 }
             }

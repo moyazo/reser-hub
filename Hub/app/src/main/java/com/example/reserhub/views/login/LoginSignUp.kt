@@ -14,7 +14,7 @@ import com.example.reserhub.DataBaseController
 import com.example.reserhub.MainActivity
 import com.example.reserhub.R
 import com.example.reserhub.views.dashboard.SuperAdmin
-import com.example.reserhub.views.hub.hub
+import com.example.reserhub.views.hub.Hub
 
 class LoginSignUp : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,27 +27,27 @@ class LoginSignUp : ComponentActivity() {
             insets
         }
 
-        var db = DataBaseController(this);
-        var signUpBtn: Button = findViewById<Button>(R.id.signUpBtn);
+        val db = DataBaseController(this)
+        val signUpBtn = findViewById<Button>(R.id.signUpBtn)
 
         signUpBtn.setOnClickListener{
             try {
-                var nameValue = findViewById<EditText>(R.id.NameInput).text.toString();
-                var emailValue = findViewById<EditText>(R.id.EmailInput).text.toString();
-                var passValue = findViewById<EditText>(R.id.PasswordInput).text.toString();
+                val nameValue = findViewById<EditText>(R.id.NameInput).text.toString()
+                val emailValue = findViewById<EditText>(R.id.EmailInput).text.toString()
+                val passValue = findViewById<EditText>(R.id.PasswordInput).text.toString()
 
-                val created = db.signUp(emailValue,nameValue,passValue);
+                val created = db.signUp(emailValue,nameValue,passValue)
 
                 if(created.status) {
 
                     if(created.user.rol == "CLIENT") {
                         Log.d("Rol","${created.user.rol}")
-                        val intent = Intent(this, hub::class.java)
-                        intent.putExtra("USER_ID","${created.user.id}");
+                        val intent = Intent(this, Hub::class.java)
+                        intent.putExtra("USER_ID","${created.user.id}")
                         startActivity(intent)
                     } else {
                         val intent = Intent(this, SuperAdmin::class.java)
-                        intent.putExtra("USER_ID","${created.user.id}");
+                        intent.putExtra("USER_ID","${created.user.id}")
                         startActivity(intent)
                         Toast.makeText(this, "Se ha iniciado sesión con ${created.response}", Toast.LENGTH_SHORT).show()
                     }

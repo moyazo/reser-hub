@@ -221,8 +221,7 @@ class DataBaseController(context: Context): SQLiteOpenHelper
              }
 
              val db = writableDatabase
-             val getUsersQuery = """SELECT * FROM users WHERE email = ?"""
-             val cursor = db.rawQuery(getUsersQuery, arrayOf(email))
+
 
                  val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
                  val currentDate = sdf.format(Date())
@@ -668,7 +667,7 @@ class DataBaseController(context: Context): SQLiteOpenHelper
 
          override fun getAllReservaOfUser(userId: String): List<ServiceDataImpl> {
              val db = writableDatabase
-             var getReservasQuery = """SELECT * FROM reservas WHERE userId = ?"""
+             val getReservasQuery = """SELECT * FROM reservas WHERE userId = ?"""
              val cursor = db.rawQuery(getReservasQuery, arrayOf(userId))
              val servicesList = mutableListOf<ServiceDataImpl>()
 

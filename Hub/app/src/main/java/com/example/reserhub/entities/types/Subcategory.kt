@@ -22,5 +22,4 @@ interface SubCategory {
     fun modifySubCategory(id: Int, newData: SubCategoryDataImpl) : Boolean
     fun deleteSubCategory(id: Int) : Boolean
 
-    // TODO: para ambos roles, edición de "mi cuenta"
 }

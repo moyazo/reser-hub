@@ -1,7 +1,5 @@
 package com.example.reserhub.entities.types
 
-import java.sql.Date
-
 interface ServiceData {
     var id: Int
     var title: String?
@@ -32,5 +30,4 @@ interface Service {
     fun modifyService(id: Int, newData: ServiceDataImpl) : Boolean
     fun deleteService(id: Int) : Boolean
 
-    // TODO: para ambos roles, edición de "mi cuenta"
 }

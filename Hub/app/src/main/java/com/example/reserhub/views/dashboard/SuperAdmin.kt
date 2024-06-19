@@ -30,7 +30,7 @@ import java.time.LocalDate
 
 class SuperAdmin : ComponentActivity() {
 
-    fun dpToPx(dp: Int, context: Context): Int {
+    private fun dpToPx(dp: Int, context: Context): Int {
         return (dp * context.resources.displayMetrics.density).toInt()
     }
 
@@ -49,7 +49,7 @@ class SuperAdmin : ComponentActivity() {
         textoCelda.gravity = Gravity.CENTER
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint("ResourceAsColor", "SetTextI18n")
     private fun insertOnUserTable (user: UserDataImpl, tableLayout: TableLayout) {
        try {
            val newRow = TableRow(tableLayout.context).apply {
@@ -67,7 +67,7 @@ class SuperAdmin : ComponentActivity() {
            val userEmailRow = TextView(tableLayout.context).apply {
                val regex = Regex("\\w+@")
                val matchResult = user.email?.let { regex.find(it) }
-               text = (matchResult?.value + "...") ?: user.email
+               text = (matchResult?.value + "...")
            }
 
            val editBtn = ImageView(tableLayout.context).apply {
@@ -202,6 +202,7 @@ class SuperAdmin : ComponentActivity() {
        }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun insertOnServiceTable (service: ServiceDataImpl, tableLayout: TableLayout) {
         try {
             val newRow = TableRow(tableLayout.context).apply {
@@ -249,6 +250,7 @@ class SuperAdmin : ComponentActivity() {
             Log.d("Error", "$error")
         }
     }
+    @SuppressLint("SetTextI18n")
     private fun insertOnCategoryTable (category: CategoryDataImpl, tableLayout: TableLayout) {
         try {
             val newRow = TableRow(tableLayout.context).apply {
@@ -286,6 +288,7 @@ class SuperAdmin : ComponentActivity() {
             Log.d("Error", "$error")
         }
     }
+    @SuppressLint("SetTextI18n")
     private fun insertOnSubCategoryTable (subCategory: SubCategoryDataImpl, tableLayout: TableLayout) {
         try {
             val newRow = TableRow(tableLayout.context).apply {
@@ -367,7 +370,7 @@ class SuperAdmin : ComponentActivity() {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setCancelable(true)
             dialog.setContentView(R.layout.super_admin_menu)
-            var exitBtn = dialog.findViewById<ImageView>(R.id.exitBtn)
+            val exitBtn = dialog.findViewById<ImageView>(R.id.exitBtn)
             exitBtn.setOnClickListener{
                 dialog.cancel()
             }

@@ -14,7 +14,7 @@ import com.example.reserhub.DataBaseController
 import com.example.reserhub.MainActivity
 import com.example.reserhub.R
 import com.example.reserhub.views.dashboard.SuperAdmin
-import com.example.reserhub.views.hub.hub
+import com.example.reserhub.views.hub.Hub
 
 class LoginSignIn : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,29 +27,29 @@ class LoginSignIn : ComponentActivity() {
             insets
         }
 
-        var db = DataBaseController(this);
-        var signInBtn: Button = findViewById<Button>(R.id.signInBtn);
+        val db = DataBaseController(this)
+        val signInBtn = findViewById<Button>(R.id.signInBtn)
 
         signInBtn.setOnClickListener{
             try {
-                var emailValue: String = findViewById<EditText>(R.id.EmailInput).text.toString();
-                var passValue: String = findViewById<EditText>(R.id.PasswordInput).text.toString();
+                val emailValue: String = findViewById<EditText>(R.id.EmailInput).text.toString()
+                val passValue: String = findViewById<EditText>(R.id.PasswordInput).text.toString()
 
                 val userFound = db.logIn(emailValue,passValue)
                 Log.d("Test","$userFound")
                 if(userFound.status) {
                     if(userFound.user.rol == "ADMIN") {
                         val intent = Intent(this, SuperAdmin::class.java)
-                        intent.putExtra("USER_ID","${userFound.user.id}");
+                        intent.putExtra("USER_ID","${userFound.user.id}")
                         startActivity(intent)
                     } else if(userFound.user.rol == "CLIENT"){
-                        val intent = Intent(this, hub::class.java)
+                        val intent = Intent(this, Hub::class.java)
                         Log.d("Test","${userFound.user.id}")
-                        intent.putExtra("USER_ID","${userFound.user.id}");
+                        intent.putExtra("USER_ID","${userFound.user.id}")
                         startActivity(intent)
                     } else {
                         val intent = Intent(this, MainActivity::class.java)
-                        intent.putExtra("USER_ID","${userFound.user.id}");
+                        intent.putExtra("USER_ID","${userFound.user.id}")
                         startActivity(intent)
                     }
 

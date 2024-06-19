@@ -26,14 +26,14 @@ class MainActivity : ComponentActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val signUpBtn: Button = findViewById<Button>(R.id.signUp)
+        val signUpBtn = findViewById<Button>(R.id.signUp)
         // Change activity
         signUpBtn.setOnClickListener{
             val intent = Intent(this, LoginSignUp::class.java)
             startActivity(intent)
         }
 
-        val signInpBtn: Button = findViewById<Button>(R.id.signIn)
+        val signInpBtn = findViewById<Button>(R.id.signIn)
         // Change activity
         signInpBtn.setOnClickListener{
             val intent = Intent(this, LoginSignIn::class.java)

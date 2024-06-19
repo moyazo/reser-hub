@@ -16,7 +16,7 @@
             android:name=".views.profile.ProfileClient"
             android:exported="false" />
         <activity
-            android:name=".views.hub.hub"
+            android:name=".views.hub.Hub"
             android:exported="false" />
         <activity
             android:name=".views.dashboard.SuperAdmin"

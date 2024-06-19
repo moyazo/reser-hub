@@ -7,8 +7,5 @@ import com.example.reserhub.entities.types.SubCategory
 import com.example.reserhub.entities.types.User
 
 
-interface Controller: User, Category, Service, Reserva, SubCategory {
-
-}
-
+interface Controller: User, Category, Service, Reserva, SubCategory
 

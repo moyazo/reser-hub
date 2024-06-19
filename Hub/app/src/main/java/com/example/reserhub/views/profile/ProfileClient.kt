@@ -1,5 +1,6 @@
 package com.example.reserhub.views.profile
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Typeface
@@ -26,7 +27,7 @@ import com.example.reserhub.R
 import com.example.reserhub.entities.types.CategoryDataImpl
 import com.example.reserhub.entities.types.ServiceDataImpl
 import com.example.reserhub.entities.types.UserDataImpl
-import com.example.reserhub.views.hub.hub
+import com.example.reserhub.views.hub.Hub
 
 class ProfileClient : ComponentActivity() {
     data class EditProfileType(var name:String,var email:String,var password:String)
@@ -37,11 +38,11 @@ class ProfileClient : ComponentActivity() {
             text = category.name
             textSize = 18f
             setTextColor(resources.getColor(android.R.color.black, null))
-            gravity = android.view.Gravity.CENTER
+            gravity = Gravity.CENTER
             setPadding(0,16,0,26)
         }
 
-        var layoutParams = LinearLayout.LayoutParams(
+        val layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
@@ -51,6 +52,7 @@ class ProfileClient : ComponentActivity() {
         linearDialogLayout.addView(textCatView)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun insertOnLayout(service: ServiceDataImpl, layout: HorizontalScrollView) {
 
         // Crear ImageView y establecer propiedades
@@ -112,11 +114,11 @@ class ProfileClient : ComponentActivity() {
             addView(dateText)
             addView(categoryText)
         }
-        var newLayout = LinearLayout(this).apply{
+        val newLayout = LinearLayout(this).apply{
             orientation = LinearLayout.VERTICAL
             addView(imageView)
             addView(horLayout)
-            val layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
@@ -157,16 +159,16 @@ class ProfileClient : ComponentActivity() {
     }
 
     private fun confirmEditData(newData:EditProfileType) {
-        var dialog = Dialog(this)
+        val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
         dialog.setContentView(R.layout.dialog_profile_edit)
         val editBtn = dialog.findViewById<Button>(R.id.createBtnAction)
         val cancelBtn = dialog.findViewById<Button>(R.id.deleteBtnAction)
         editBtn.setOnClickListener{
-            var db =DataBaseController(this)
+            val db =DataBaseController(this)
             val userId = intent.getStringExtra("USER_ID")!!
-            var user = UserDataImpl(0,newData.name,newData.email,newData.password,null,null,null,null)
+            val user = UserDataImpl(0,newData.name,newData.email,newData.password,null,null,null,null)
             db.modifyUser(userId,user)
             dialog.cancel()
             recreate()
@@ -186,7 +188,7 @@ class ProfileClient : ComponentActivity() {
             insets
         }
 
-        var editDataBtn = findViewById<Button>(R.id.editDataBtn)
+        val editDataBtn = findViewById<Button>(R.id.editDataBtn)
         editDataBtn.setOnClickListener{
             val nameInput = findViewById<EditText>(R.id.nameInput).text.toString()
             val emailInput = findViewById<EditText>(R.id.emailInput).text.toString()
@@ -248,7 +250,7 @@ class ProfileClient : ComponentActivity() {
             }
             val profileBtn = dialog.findViewById<LinearLayout>(R.id.serviceOptContainerHub)
             profileBtn.setOnClickListener{
-                    val intent = Intent(this, hub::class.java)
+                    val intent = Intent(this, Hub::class.java)
                     startActivity(intent)
             }
             dialog.show()
